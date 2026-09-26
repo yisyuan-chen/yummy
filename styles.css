@@ -217,6 +217,18 @@ button {
   padding: 16px;
 }
 
+.step-row {
+  display: grid;
+  gap: 10px;
+}
+
+.step-preview {
+  aspect-ratio: 1.2;
+  border-radius: 16px;
+  object-fit: cover;
+  width: 100%;
+}
+
 .hidden {
   display: none !important;
 }
