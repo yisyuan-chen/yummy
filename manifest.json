@@ -1,0 +1,19 @@
+{
+  "name": "Yummy",
+  "short_name": "Yummy",
+  "description": "A local-first personal recipe manager.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#FFF9F0",
+  "theme_color": "#F5A524",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "1024x1024",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
