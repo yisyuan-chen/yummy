@@ -1,0 +1,222 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
+}
+
+body {
+  background: #fff9f0;
+  color: #1f1a14;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+}
+
+.screen {
+  min-height: 100vh;
+  padding: max(18px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
+}
+
+.topbar {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.title {
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.icon-btn,
+.pill-btn,
+.primary-btn,
+.danger-btn {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  font-weight: 800;
+  justify-content: center;
+}
+
+.icon-btn {
+  background: #f5a524;
+  color: #1f1a14;
+  height: 46px;
+  width: 46px;
+}
+
+.pill-btn {
+  background: #fff;
+  border: 1px solid #e8ded1;
+  color: #1f1a14;
+  min-height: 42px;
+  padding: 0 16px;
+}
+
+.primary-btn {
+  background: #f5a524;
+  color: #1f1a14;
+  min-height: 48px;
+  padding: 0 18px;
+}
+
+.danger-btn {
+  background: #c9342d;
+  color: #fff;
+  min-height: 48px;
+  padding: 0 18px;
+}
+
+.search-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.input,
+.textarea,
+.select {
+  background: #fff;
+  border: 1px solid #e8ded1;
+  border-radius: 16px;
+  color: #1f1a14;
+  min-height: 46px;
+  outline: none;
+  padding: 12px 14px;
+  width: 100%;
+}
+
+.textarea {
+  min-height: 104px;
+  resize: vertical;
+}
+
+.grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-bottom: 92px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 8px 22px rgba(31, 26, 20, 0.08);
+  overflow: hidden;
+}
+
+.card-img,
+.placeholder {
+  aspect-ratio: 1.08;
+  background: #ffe8b8;
+  display: grid;
+  object-fit: cover;
+  place-items: center;
+  width: 100%;
+}
+
+.placeholder {
+  color: #b75e00;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.card-body {
+  padding: 12px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 850;
+  margin: 0 0 6px;
+}
+
+.muted {
+  color: #75695c;
+  font-size: 13px;
+}
+
+.accent {
+  color: #b75e00;
+  font-weight: 850;
+}
+
+.fab {
+  bottom: max(22px, env(safe-area-inset-bottom));
+  height: 62px;
+  position: fixed;
+  right: 22px;
+  width: 62px;
+  z-index: 10;
+}
+
+.section {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.label {
+  font-weight: 850;
+}
+
+.empty {
+  color: #75695c;
+  padding: 40px 16px;
+  text-align: center;
+}
+
+.sheet {
+  background: #fff;
+  border-radius: 24px 24px 0 0;
+  bottom: 0;
+  box-shadow: 0 -10px 30px rgba(31, 26, 20, 0.18);
+  left: 0;
+  max-height: 84vh;
+  overflow: auto;
+  padding: 18px;
+  position: fixed;
+  right: 0;
+  z-index: 20;
+}
+
+.row {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.list-item {
+  background: #fff;
+  border-radius: 18px;
+  margin: 10px 0;
+  padding: 16px;
+}
+
+.hidden {
+  display: none !important;
+}
