@@ -157,6 +157,7 @@
 
   function renderEditor(recipeId) {
     const recipe = state.recipes.find((item) => item.id === recipeId);
+    const steps = recipe?.steps?.length ? recipe.steps : [{ text: '', image: '' }];
     document.body.innerHTML = `
       <main class="screen">
         <div class="topbar">
@@ -174,12 +175,20 @@
           <textarea id="ingredients" class="textarea">${escapeHtml((recipe?.ingredients || []).join('\n'))}</textarea>
           <label class="label">工具，每行一个</label>
           <textarea id="tools" class="textarea">${escapeHtml((recipe?.tools || []).join('\n'))}</textarea>
-          <label class="label">制作流程，每行一个 Step</label>
-          <textarea id="steps" class="textarea">${escapeHtml((recipe?.steps || []).map((step) => step.text).join('\n'))}</textarea>
+          <div class="row">
+            <label class="label">制作流程</label>
+            <button class="pill-btn" id="addStepBtn" type="button">添加 Step</button>
+          </div>
+          <div id="stepRows">${renderStepEditorRows(steps)}</div>
         </div>
       </main>
     `;
     $('#cancelBtn').onclick = () => go(recipeId ? { name: 'detail', recipeId } : { name: 'home' });
+    $('#addStepBtn').onclick = () => {
+      $('#stepRows').insertAdjacentHTML('beforeend', renderStepEditorRows([{ text: '', image: '' }], document.querySelectorAll('.step-row').length));
+      bindStepButtons();
+    };
+    bindStepButtons();
     $('#saveBtn').onclick = async () => {
       const name = $('#name').value.trim();
       const durationMinutes = Number($('#duration').value);
@@ -195,7 +204,7 @@
         durationMinutes,
         ingredients: lines($('#ingredients').value),
         tools: lines($('#tools').value),
-        steps: lines($('#steps').value).map((text, index) => ({ text, image: recipe?.steps[index]?.image || '' })),
+        steps: await collectEditorSteps(),
         listIds: recipe?.listIds || [],
         createdAt: recipe?.createdAt || new Date().toISOString(),
         updatedAt: new Date().toISOString()
@@ -204,6 +213,46 @@
       saveState();
       go({ name: 'detail', recipeId: next.id });
     };
+  }
+
+  function renderStepEditorRows(steps, offset = 0) {
+    return steps.map((step, index) => {
+      const number = offset + index + 1;
+      return `
+        <div class="step-row list-item" data-existing-image="${escapeAttr(step.image || '')}">
+          <div class="row">
+            <strong>Step ${number}</strong>
+            <button class="pill-btn remove-step-image" type="button">删除图片</button>
+          </div>
+          <textarea class="textarea step-text" placeholder="写下这一步怎么做">${escapeHtml(step.text || '')}</textarea>
+          ${step.image ? `<img class="step-preview" src="${step.image}" alt="" />` : '<div class="muted">还没有步骤图片</div>'}
+          <input type="file" accept="image/*" class="input step-image" />
+        </div>
+      `;
+    }).join('');
+  }
+
+  function bindStepButtons() {
+    document.querySelectorAll('.remove-step-image').forEach((button) => {
+      button.onclick = () => {
+        const row = button.closest('.step-row');
+        row.dataset.existingImage = '';
+        row.querySelector('.step-preview')?.remove();
+        if (!row.querySelector('.muted')) {
+          row.querySelector('.step-text').insertAdjacentHTML('afterend', '<div class="muted">还没有步骤图片</div>');
+        }
+      };
+    });
+  }
+
+  async function collectEditorSteps() {
+    const rows = Array.from(document.querySelectorAll('.step-row'));
+    const steps = await Promise.all(rows.map(async (row) => {
+      const text = row.querySelector('.step-text').value.trim();
+      const image = await fileToDataUrl(row.querySelector('.step-image').files[0]) || row.dataset.existingImage || '';
+      return text ? { text, image } : null;
+    }));
+    return steps.filter(Boolean);
   }
 
   function renderLists() {
